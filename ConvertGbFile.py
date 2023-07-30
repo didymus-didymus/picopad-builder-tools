@@ -3,6 +3,7 @@
 import sys
 import os
 import subprocess
+import shutil
 
 rootPath = '/home/picoPad/picopad-playground/picopad-sdk/'
 buildPath = rootPath + 'picopad-gb/'
@@ -28,17 +29,15 @@ def convertFile(fileName):
                     break
                 rom_c.write(line)
     os.remove(tempFile)
-    print(yellowText+' MAKE execution:\n'+normalText)
+    print(yellowText+'MAKE execution:\n'+normalText)
     subprocess.check_call(['make'], cwd=buildPath)
 
     binaryPath = rootPath + 'build/'
     
     head, tail = os.path.split(fileName)
-    os.rename(binaryPath+'PICOPAD-GB.PP2', f"{head}/{basePath}.PP2")
-    print(greenText+f" FINISHED {basePath}\n"+normalText)
-
-print(yellowText+'CMAKE execution:\n'+normalText)
-subprocess.check_call(['cmake', '.'], cwd=buildPath)
+    shutil.copyfile(binaryPath+'PICOPAD-GB.PP2', f"{head}/{basePath}.PP2")
+    os.remove(binaryPath+'PICOPAD-GB.PP2')
+    print(yellowText+f" FINISHED {basePath}\n"+normalText)
 
 for subdir, dirs, files in os.walk(sys.argv[1]):
     for file in files:
