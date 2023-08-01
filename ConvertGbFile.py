@@ -6,8 +6,9 @@ import subprocess
 import shutil
 import traceback
 
-rootPath = '/home/picoPad/picopad-playground/picopad-sdk/'
-buildPath = rootPath + 'picopad-gb/'
+
+rootPath = os.path.normpath(f'{os.environ["PICOPAD_BASE_PATH"]}..')
+buildPath = rootPath + '/picopad-gb/'
 
 yellowText = "\033[1;33;40m"
 greenText  = "\033[1;32;40m"
@@ -39,7 +40,7 @@ def convertFile(fileName):
         reportError(fileName, errInfo)
         return
 
-    binaryPath = rootPath + 'build/'
+    binaryPath = rootPath + '/build/'
     
     head, tail = os.path.split(fileName)
     squeezedFileName = basePath.replace(" ", "").replace(")","").replace("(","").replace("-","").replace(",","")
