@@ -8,7 +8,6 @@ import traceback
 
 
 rootPath = os.path.normpath(f'{os.environ["PICOPAD_BASE_PATH"]}..')
-buildPath = rootPath + '/picopad-gb/'
 
 yellowText = "\033[1;33;40m"
 greenText  = "\033[1;32;40m"
@@ -17,6 +16,10 @@ redText    = "\033[0;31;40m"
 
 def convertFile(fileName):
     basePath = os.path.splitext(os.path.basename(fileName))[0]
+    buildPath = rootPath + '/picopad-gb/'
+    if fileName.endswith(".gbc"):
+        buildPath = rootPath + '/picopad-gbc/'
+
     print(greenText+f"Starting: {basePath}")
 
     tempFile = 'temp.c'
