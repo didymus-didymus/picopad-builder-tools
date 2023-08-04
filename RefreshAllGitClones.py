@@ -10,6 +10,7 @@ redText    = "\033[0;31;40m"
 
 def refreshDirectory(repoPath):
     try:
+        subprocess.check_output(['git','clean','-dfx',repoPath], cwd=repoPath, stderr=subprocess.STDOUT)
         subprocess.check_output(['git','pull',repoPath], cwd=repoPath, stderr=subprocess.STDOUT)
     except subprocess.CalledProcessError as e:
         errInfo=e.output.decode()
@@ -33,6 +34,8 @@ def reportError(fileName, ex):
 
 refreshDirectory(f'{rootPath}/pico-sdk/')
 updateSubmodules(f'{rootPath}/pico-sdk/')
-refreshDirectory(f'{rootPath}/picopad-builder-tools/')
+#refreshDirectory(f'{rootPath}/picopad-builder-tools/')
 refreshDirectory(f'{rootPath}/pico-examples/')
 refreshDirectory(f'{rootPath}/picopad-playground/')
+
+subprocess.call(['sh', f'{rootPath}/picopad-builder-tools/PatchWorkarounds.sh'])
